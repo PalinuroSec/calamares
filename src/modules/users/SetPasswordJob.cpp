@@ -64,7 +64,7 @@ SetPasswordJob::make_salt( int length )
         cWarning() << "Entropy data for salt is low-quality.";
     }
 
-    salt_string.insert( 0, "$6$" );
+    salt_string.insert( 0, "$y$" );
     salt_string.append( '$' );
     return salt_string;
 }
@@ -94,7 +94,7 @@ SetPasswordJob::exec()
 
     QString salt;
 #ifdef HAVE_CRYPT_GENSALT
-    salt = crypt_gensalt( NULL, 0, NULL, 0 );
+    salt = crypt_gensalt( "$y$", 11, NULL, 0 );
 #else
     salt = make_salt( 16 );
 #endif
